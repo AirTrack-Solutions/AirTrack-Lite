@@ -1,0 +1,427 @@
+.
+├── app
+│   ├── admin_routes.py
+│   ├── app.py
+│   ├── config.json
+│   ├── Dockerfile
+│   ├── extensions.py
+│   ├── mariadb-init
+│   │   └── init.sql
+│   ├── models
+│   │   └── aircraft.py
+│   ├── registries
+│   │   ├── airports.csv
+│   │   ├── Australia
+│   │   │   ├── australia.csv
+│   │   │   ├── australia.sql
+│   │   │   └── holding
+│   │   │       ├── australia_export.csv
+│   │   │       └── australia.sql
+│   │   ├── create_country_tables.sql
+│   │   ├── Ireland
+│   │   │   ├── aircraft_registry.csv
+│   │   │   ├── cleaned_file.tab
+│   │   │   └── holding
+│   │   │       ├── 1.html
+│   │   │       └── all-registered-aircraft---as-at-end-november-2024---adjusted.pdf
+│   │   └── New_Zealand
+│   │       └── new_zealand.sql
+│   ├── requirements.txt
+│   ├── routes
+│   │   ├── add_aircraft_routes.py
+│   │   ├── aircraft_info_route.py
+│   │   ├── aircraft_routes.py
+│   │   ├── airlines_routes.py
+│   │   ├── airports_routes.py
+│   │   ├── edit_aircraft_routes.py
+│   │   ├── flight_history_routes.py
+│   │   ├── __init__.py
+│   │   ├── reports_routes.py
+│   │   ├── routes.txt
+│   │   └── search_routes.py
+│   ├── scripts
+│   │   ├── airports.csv
+│   │   ├── create_community_airports.sql
+│   │   └── import_airports.py
+│   ├── static
+│   │   ├── airtrack_icon.ico
+│   │   ├── css
+│   │   │   ├── add_aircraft.css
+│   │   │   ├── add_airline.css
+│   │   │   ├── aircraft.css
+│   │   │   ├── aircraft_info_bak.css
+│   │   │   ├── aircraft_info.css
+│   │   │   ├── aircraft_info_help.css
+│   │   │   ├── aircraft_table.css
+│   │   │   ├── airline_info.css
+│   │   │   ├── airlines.css
+│   │   │   ├── airlines_table.css
+│   │   │   ├── bootstrap.min.css
+│   │   │   ├── bootstrap.min.css.map
+│   │   │   ├── broken_links.css
+│   │   │   ├── datatables.min.css
+│   │   │   ├── edit_aircraft.css
+│   │   │   ├── edit_airline.css
+│   │   │   ├── filtered_aircraft.css
+│   │   │   ├── flight_history.css
+│   │   │   ├── flightradar24.css
+│   │   │   ├── footer.css
+│   │   │   ├── header.css
+│   │   │   ├── index.css
+│   │   │   ├── layouts.css
+│   │   │   ├── reports.css
+│   │   │   ├── settings.css
+│   │   │   ├── splash.css
+│   │   │   └── upload_image.css
+│   │   ├── favicon.ico
+│   │   ├── flags
+│   │   │   ├── ad.png
+│   │   │   ├── ae.png
+│   │   │   ├── af.png
+│   │   │   ├── ag.png
+│   │   │   ├── ai.png
+│   │   │   ├── al.png
+│   │   │   ├── am.png
+│   │   │   ├── ao.png
+│   │   │   ├── aq.png
+│   │   │   ├── ar.png
+│   │   │   ├── as.png
+│   │   │   ├── at.png
+│   │   │   ├── au.png
+│   │   │   ├── aw.png
+│   │   │   ├── ax.png
+│   │   │   ├── az.png
+│   │   │   ├── ba.png
+│   │   │   ├── bb.png
+│   │   │   ├── bd.png
+│   │   │   ├── be.png
+│   │   │   ├── bf.png
+│   │   │   ├── bg.png
+│   │   │   ├── bh.png
+│   │   │   ├── bi.png
+│   │   │   ├── bj.png
+│   │   │   ├── bl.png
+│   │   │   ├── bm.png
+│   │   │   ├── bn.png
+│   │   │   ├── bo.png
+│   │   │   ├── bq.png
+│   │   │   ├── br.png
+│   │   │   ├── bs.png
+│   │   │   ├── bt.png
+│   │   │   ├── bv.png
+│   │   │   ├── bw.png
+│   │   │   ├── by.png
+│   │   │   ├── bz.png
+│   │   │   ├── ca.png
+│   │   │   ├── cc.png
+│   │   │   ├── cd.png
+│   │   │   ├── cf.png
+│   │   │   ├── cg.png
+│   │   │   ├── ch.png
+│   │   │   ├── ci.png
+│   │   │   ├── ck.png
+│   │   │   ├── cl.png
+│   │   │   ├── cm.png
+│   │   │   ├── cn.png
+│   │   │   ├── co.png
+│   │   │   ├── cr.png
+│   │   │   ├── cu.png
+│   │   │   ├── cv.png
+│   │   │   ├── cw.png
+│   │   │   ├── cx.png
+│   │   │   ├── cy.png
+│   │   │   ├── cz.png
+│   │   │   ├── de.png
+│   │   │   ├── dj.png
+│   │   │   ├── dk.png
+│   │   │   ├── dm.png
+│   │   │   ├── do.png
+│   │   │   ├── download.png
+│   │   │   ├── dz.png
+│   │   │   ├── ec.png
+│   │   │   ├── ee.png
+│   │   │   ├── eg.png
+│   │   │   ├── eh.png
+│   │   │   ├── er.png
+│   │   │   ├── es.png
+│   │   │   ├── et.png
+│   │   │   ├── fi.png
+│   │   │   ├── fj.png
+│   │   │   ├── fk.png
+│   │   │   ├── fm.png
+│   │   │   ├── fo.png
+│   │   │   ├── fr.png
+│   │   │   ├── ga.png
+│   │   │   ├── gb-eng.png
+│   │   │   ├── gb-nir.png
+│   │   │   ├── gb.png
+│   │   │   ├── gb-sct.png
+│   │   │   ├── gb-wls.png
+│   │   │   ├── gd.png
+│   │   │   ├── ge.png
+│   │   │   ├── gf.png
+│   │   │   ├── gg.png
+│   │   │   ├── gh.png
+│   │   │   ├── gi.png
+│   │   │   ├── gl.png
+│   │   │   ├── gm.png
+│   │   │   ├── gn.png
+│   │   │   ├── gp.png
+│   │   │   ├── gq.png
+│   │   │   ├── gr.png
+│   │   │   ├── gs.png
+│   │   │   ├── gt.png
+│   │   │   ├── gu.png
+│   │   │   ├── gw.png
+│   │   │   ├── gy.png
+│   │   │   ├── hk.png
+│   │   │   ├── hm.png
+│   │   │   ├── hn.png
+│   │   │   ├── hr.png
+│   │   │   ├── ht.png
+│   │   │   ├── hu.png
+│   │   │   ├── id.png
+│   │   │   ├── ie.png
+│   │   │   ├── il.png
+│   │   │   ├── im.png
+│   │   │   ├── in.png
+│   │   │   ├── io.png
+│   │   │   ├── iq.png
+│   │   │   ├── ir.png
+│   │   │   ├── is.png
+│   │   │   ├── it.png
+│   │   │   ├── je.png
+│   │   │   ├── jm.png
+│   │   │   ├── jo.png
+│   │   │   ├── jp.png
+│   │   │   ├── ke.png
+│   │   │   ├── kg.png
+│   │   │   ├── kh.png
+│   │   │   ├── ki.png
+│   │   │   ├── km.png
+│   │   │   ├── kn.png
+│   │   │   ├── kp.png
+│   │   │   ├── kr.png
+│   │   │   ├── kw.png
+│   │   │   ├── ky.png
+│   │   │   ├── kz.png
+│   │   │   ├── la.png
+│   │   │   ├── lb.png
+│   │   │   ├── lc.png
+│   │   │   ├── li.png
+│   │   │   ├── lk.png
+│   │   │   ├── lr.png
+│   │   │   ├── ls.png
+│   │   │   ├── lt.png
+│   │   │   ├── lu.png
+│   │   │   ├── lv.png
+│   │   │   ├── ly.png
+│   │   │   ├── ma.png
+│   │   │   ├── mc.png
+│   │   │   ├── md.png
+│   │   │   ├── me.png
+│   │   │   ├── mf.png
+│   │   │   ├── mg.png
+│   │   │   ├── mh.png
+│   │   │   ├── mk.png
+│   │   │   ├── ml.png
+│   │   │   ├── mm.png
+│   │   │   ├── mn.png
+│   │   │   ├── mo.png
+│   │   │   ├── mp.png
+│   │   │   ├── mq.png
+│   │   │   ├── mr.png
+│   │   │   ├── ms.png
+│   │   │   ├── mt.png
+│   │   │   ├── mu.png
+│   │   │   ├── mv.png
+│   │   │   ├── mw.png
+│   │   │   ├── mx.png
+│   │   │   ├── my.png
+│   │   │   ├── mz.png
+│   │   │   ├── na.png
+│   │   │   ├── nc.png
+│   │   │   ├── ne.png
+│   │   │   ├── nf.png
+│   │   │   ├── ng.png
+│   │   │   ├── ni.png
+│   │   │   ├── nl.png
+│   │   │   ├── no.png
+│   │   │   ├── np.png
+│   │   │   ├── nr.png
+│   │   │   ├── nu.png
+│   │   │   ├── nz.png
+│   │   │   ├── om.png
+│   │   │   ├── pa.png
+│   │   │   ├── pe.png
+│   │   │   ├── pf.png
+│   │   │   ├── pg.png
+│   │   │   ├── ph.png
+│   │   │   ├── pk.png
+│   │   │   ├── pl.png
+│   │   │   ├── pm.png
+│   │   │   ├── pn.png
+│   │   │   ├── pr.png
+│   │   │   ├── ps.png
+│   │   │   ├── pt.png
+│   │   │   ├── pw.png
+│   │   │   ├── py.png
+│   │   │   ├── qa.png
+│   │   │   ├── re.png
+│   │   │   ├── ro.png
+│   │   │   ├── rs.png
+│   │   │   ├── ru.png
+│   │   │   ├── rw.png
+│   │   │   ├── sa.png
+│   │   │   ├── sb.png
+│   │   │   ├── sc.png
+│   │   │   ├── sd.png
+│   │   │   ├── se.png
+│   │   │   ├── sg.png
+│   │   │   ├── sh.png
+│   │   │   ├── si.png
+│   │   │   ├── sj.png
+│   │   │   ├── sk.png
+│   │   │   ├── sl.png
+│   │   │   ├── sm.png
+│   │   │   ├── sn.png
+│   │   │   ├── so.png
+│   │   │   ├── sr.png
+│   │   │   ├── ss.png
+│   │   │   ├── st.png
+│   │   │   ├── sv.png
+│   │   │   ├── sx.png
+│   │   │   ├── sy.png
+│   │   │   ├── sz.png
+│   │   │   ├── tc.png
+│   │   │   ├── td.png
+│   │   │   ├── tf.png
+│   │   │   ├── tg.png
+│   │   │   ├── th.png
+│   │   │   ├── tj.png
+│   │   │   ├── tk.png
+│   │   │   ├── tl.png
+│   │   │   ├── tm.png
+│   │   │   ├── tn.png
+│   │   │   ├── to.png
+│   │   │   ├── tr.png
+│   │   │   ├── tt.png
+│   │   │   ├── tv.png
+│   │   │   ├── tw.png
+│   │   │   ├── tz.png
+│   │   │   ├── ua.png
+│   │   │   ├── ug.png
+│   │   │   ├── um.png
+│   │   │   ├── us.png
+│   │   │   ├── uy.png
+│   │   │   ├── uz.png
+│   │   │   ├── va.png
+│   │   │   ├── vc.png
+│   │   │   ├── ve.png
+│   │   │   ├── vg.png
+│   │   │   ├── vi.png
+│   │   │   ├── vn.png
+│   │   │   ├── vu.png
+│   │   │   ├── wf.png
+│   │   │   ├── ws.png
+│   │   │   ├── xk.png
+│   │   │   ├── ye.png
+│   │   │   ├── yt.png
+│   │   │   ├── za.png
+│   │   │   ├── zm.png
+│   │   │   └── zw.png
+│   │   ├── images
+│   │   │   ├── favicon.ico
+│   │   │   └── teal_texture.jpg
+│   │   ├── jquery
+│   │   │   └── jquery-3.7.1.min.js
+│   │   ├── js
+│   │   │   ├── bootstrap.bundle.min.js
+│   │   │   ├── datatables.min.js
+│   │   │   ├── jquery-3.7.1.min.js
+│   │   │   ├── reports.js
+│   │   │   └── search.js
+│   │   ├── json
+│   │   │   └── countries.json
+│   │   ├── logo.png
+│   │   ├── scripts.js
+│   │   │   ├── filter.js
+│   │   │   ├── live_filter.js
+│   │   │   └── splash.js
+│   │   ├── teal_texture.jpg
+│   │   └── uploads
+│   │       ├── aircraft
+│   │       │   ├── cc-bga.jpg
+│   │       │   ├── rp-c7778.jpg
+│   │       │   ├── vh-nxi.jpg
+│   │       │   ├── VH-VXA_placeholder10.png
+│   │       │   ├── VH-VXA_placeholder5.png
+│   │       │   ├── VH-VXA_placeholder6.png
+│   │       │   └── VH-VXA_placeholder7.png
+│   │       ├── cc-bga.jpg
+│   │       ├── rp-c7778.jpg
+│   │       └── vh-nxi.jpg
+│   ├── templates
+│   │   ├── 404.html
+│   │   ├── add_aircraft.html
+│   │   ├── add_airline.html
+│   │   ├── aircraft_form.html
+│   │   ├── aircraft.html
+│   │   ├── aircraft_info_bak.html
+│   │   ├── aircraft_info_help_content.html
+│   │   ├── aircraft_info_help.html
+│   │   ├── aircraft_info.html
+│   │   ├── _aircraft_rows.html
+│   │   ├── aircraft_table.html
+│   │   ├── airline_info.html
+│   │   ├── _airline_rows.html
+│   │   ├── airlines.html
+│   │   ├── airlines_table.html
+│   │   ├── airport_info.html
+│   │   ├── airtrack_faq.html
+│   │   ├── base.html
+│   │   ├── db_config_form.html
+│   │   ├── edit_aircraft.html
+│   │   ├── edit_airline.html
+│   │   ├── edit_broken_links.html
+│   │   ├── error.html
+│   │   ├── flight_history.html
+│   │   ├── flightradar24.html
+│   │   ├── footer.html
+│   │   ├── header.html
+│   │   ├── index.html
+│   │   ├── logged_airports.html
+│   │   ├── orphaned_aircraft.html
+│   │   ├── partials
+│   │   │   ├── aircraft_filtered_page.html
+│   │   │   ├── aircraft_partial.html
+│   │   │   ├── _aircraft_table.html
+│   │   │   ├── _aircraft_table_rows.html
+│   │   │   ├── airlines_partial.html
+│   │   │   ├── airlines_rows.html
+│   │   │   ├── filtered_airlines.html
+│   │   │   └── _report_table.html
+│   │   ├── reports.html
+│   │   ├── report_table.html
+│   │   ├── settings.html
+│   │   ├── setup_form.html
+│   │   ├── setup_success.html
+│   │   ├── splash.html
+│   │   ├── upload_aircraft_image.html
+│   │   └── upload_image.html
+│   ├── utils
+│   │   ├── airport_utils.py
+│   │   ├── country_flags.py
+│   │   ├── link_checker.py
+│   │   ├── logger.py
+│   │   └── timezone_utils.py
+│   └── wait-for-mariadb.sh
+├── config.json
+├── docker-compose.yml
+├── INSTALL.md
+├── LICENSE.txt
+├── README.md
+├── start_airtrack.bat
+└── tree.txt
+
+25 directories, 400 files

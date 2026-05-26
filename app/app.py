@@ -116,6 +116,14 @@ app.jinja_env.globals['get_country_flag'] = get_country_flag
 def inject_get_country_flag():
     return dict(get_country_flag=get_country_flag)
 
+# ── GitHub Gorilla Easter egg ─────────────────────────────────────────────────
+from routes.add_aircraft_routes import limit as _config_limit
+_gorilla_triggered = (_config_limit != 100)
+
+@app.context_processor
+def inject_gorilla_status():
+    return dict(gorilla_alert=_gorilla_triggered)
+
 # Register template filters (minimal addition)
 from routes.airports_routes import register_filters
 register_filters(app)

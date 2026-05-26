@@ -1,173 +1,160 @@
-# ⚠️ AirTrack Lite is a publicly accesible demonstration build.
-It is NOT open-source.
+# AirTrack Lite 1.0.0 "Wilbur"
 
-The full AirTrack system is distributed via private repositories
-to licensed clients only.
+### Free self-hosted aircraft tracking for planespotters and aviation enthusiasts.
 
-# AirTrack 0.9.0 "Orville"
+[![Version](https://img.shields.io/badge/version-1.0.0%20Wilbur-blue)](https://airtracksolutions.com.au)
+[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Raspberry%20Pi-lightgrey)](https://airtracksolutions.com.au)
+[![License](https://img.shields.io/badge/license-Free%20for%20personal%20use-green)](https://airtracksolutions.com.au)
+[![Discord](https://img.shields.io/discord/1388676733842227210?label=Discord&logo=discord&color=5865F2)](https://discord.gg/NsmUxZmuY)
 
-**"AirTrack wasn't born — it was airlifted out, kicking, screaming, and waving a pilot's license!"** 🐷💄🛫😂
-
----
-
-## About AirTrack
-
-AirTrack is a **locally installed**, **offline-first** aircraft tracking system built for aviation enthusiasts, plane spotters, and serious aircraft data managers.
-
-It began over **two years ago** as a simple idea for a Pi-based field spotting setup, evolving through sleepless nights, heartbreaks, coding marathons, and countless real-world field tests.
-Today, it has become a full database-driven, multi-system, resilient aircraft tracking suite.
-
-This is **not** a cloud-based system.
-**Your data stays with you.**
-You are the Captain.
+> **AirTrack Lite** is a free, fully functional build of AirTrack with a 100-aircraft cap.
+> Everything works. Same interface, same database, same installer.
+> When you outgrow 100 aircraft, the full version is waiting.
 
 ---
 
-## Current Version
+## What is AirTrack?
 
-| Field | Info |
-|:------|:-----|
-| **Version** | 0.9.0 |
-| **Codename** | Orville |
-| **Release Date** | 19 May 2025 |
-| **Codename Meaning** | Honoring **Orville Wright**, pilot of the first controlled powered flight at Kitty Hawk, North Carolina on **17 December 1903**. |
+AirTrack is a locally-installed, offline-first aircraft tracking suite. It runs entirely on your own hardware — Linux desktop or Raspberry Pi — with no cloud, no subscriptions, and no data leaving your machine.
 
----
+You log what you see. You own what you log. Nobody else gets a look at it.
 
-## Features
-
-- ✈️ Manage Airlines and Aircraft Registrations
-- 📸 Upload and Manage Aircraft Images
-- 🛬 Full Flight History and Sightings Tracker
-- 🖥️ Local Website Interface (Flask + MariaDB backend)
-- 🐧 Supports Linux Desktop and Raspberry Pi OS
-- 🚀 One-Click Installer (Dockerized install process)
-- 🔒 100% Offline and Local Storage — no remote servers involved
-- 📈 Future-ready reporting and bug tracking
+Most aviation software is built around airlines and commercial traffic. AirTrack is built around the question planespotters actually ask: **what is that aircraft, where is it registered, and have I seen it before?**
 
 ---
 
-## System Requirements
+## What's in the box
+
+**A registration database — 78 countries, 417,000+ records, fully offline.**
+Civil aircraft registrations for 78 countries are bundled with AirTrack. No API keys. No internet lookups. You see a registration, AirTrack already knows it.
+
+**A sightings and flights logbook.**
+Log aircraft you've seen, flights you've tracked, and build a personal history. Search by registration, airline, type, country, or ICAO/IATA code.
+
+**Aircraft photo storage.**
+Attach your own photos to aircraft records. Stored locally, never uploaded anywhere.
+
+**Aria — an AI assistant running on your own machine.**
+Ask Aria questions in plain English. *"How many A320s have I logged?"* She queries your local database and answers. Powered by phi4-mini via Ollama — no data sent to any cloud service.
+
+**Works with ADS-B.**
+Designed to sit alongside dump1090, FR24, or any ADS-B feeder. AirTrack becomes the logging and identification layer on top of your live SDR feed.
+
+---
+
+## Lite vs Full
+
+| Feature | Lite (Free) | Full |
+|:--------|:-----------:|:----:|
+| Aircraft records | Up to 100 | Unlimited |
+| Registration database (50 countries) | ✅ | ✅ |
+| Sightings & flights logbook | ✅ | ✅ |
+| Photo management | ✅ | ✅ |
+| Aria AI assistant | ✅ | ✅ |
+| ADS-B integration | ✅ | ✅ |
+| Android companion app | ✅ | ✅ |
+| Multi-node Pi fleet support | ✅ | ✅ |
+| Price | Free | Contact us |
+
+---
+
+## System requirements
 
 | Component | Requirement |
-|:----------|:-------------|
-| Operating System | Linux Desktop (Ubuntu/Pop!_OS/Debian) or Raspberry Pi OS |
-| Docker | Installed (Installer will install if missing) |
-| Docker Compose | Installed (Installer will install if missing) |
-| RAM | 2GB minimum recommended |
-| Storage | Stable SSD or SD Card (for Pi) |
-| Browser | Modern browser (Chrome, Firefox, Edge, etc.) |
+|:----------|:------------|
+| OS | Linux Desktop (Ubuntu / Pop!_OS / Mint) or Raspberry Pi OS 64-bit |
+| Docker | Required (installer will install if missing) |
+| Docker Compose | Required (installer will install if missing) |
+| RAM | 2 GB minimum |
+| Storage | SSD recommended; SD card works on Pi |
+| Browser | Chrome, Firefox, Edge, or Safari |
+
+Aria requires Ollama with phi4-mini. Optional — AirTrack works fine without it.
 
 ---
 
-## Installation Instructions
+## Installation
 
-AirTrack Lite is intended for evaluation and demonstration purposes and is not a production deployment.
+```bash
+# 1. Download and unzip AirTrack Lite
+# 2. Open a terminal in the extracted folder
 
-1. Download and unzip the Installer Package.
-2. Open a Terminal inside the unzipped folder.
-3. Make the install script executable:
-   ```
-   chmod +x install_airtrack.sh
-   ```
-4. Run the installer:
-   ```
-   ./install_airtrack.sh
-   ```
-5. Follow the on-screen prompts:
-   - Set your MySQL username and password (for internal use)
-   - Wait while AirTrack installs automatically
-6. After installation, open your web browser and visit:
-   ```
-   http://localhost:5000
-   ```
+chmod +x install_airtrack.sh
+./install_airtrack.sh
+```
 
-You are now flying with AirTrack!
+When installation completes, open your browser:
+
+```
+http://localhost:5000
+```
+
+You're flying.
 
 ---
 
-## Supported Systems
+## Starting and stopping
 
-| System | Status |
-|:-------|:-------|
-| Linux Desktop (Ubuntu, Pop!_OS, Mint) | ✅ Supported |
-| Raspberry Pi OS (64-bit) | ✅ Supported |
-| Debian-based distros | ✅ Should work | If not, let us know |
-| Windows and Mac (via Docker Desktop) | 🚧 Planned for future versions |
+```bash
+./start.sh    # Start AirTrack
+./stop.sh     # Stop AirTrack
+```
 
 ---
 
-## Roadmap
+## Community
 
-- 📈 Expand reports and analytics for sightings and trends
-- 🗺️ Offline mapping integration for spotting locations
-- 🛫 Add field capture improvements
-- 📦 Full Windows & Mac Docker Installers
-- 🔄 Centralized optional registry update syncing
-- 🐞 Integrated BugTracker system with secure user authentication
-- 🎖️ Extended pilot-themed release system ("The Legends of Flight" series)
+Come and show us your setup, ask questions, or just talk planes.
+
+👉 **[Join AirTrack Solutions on Discord](https://discord.gg/NsmUxZmuY)**
 
 ---
 
-## AirTrack Release Codenames
+## Release codenames
 
-Each AirTrack release is named after an aviation pioneer — honoring history.
+AirTrack releases are named after aviation pioneers.
 
-| Version | Codename | Reason |
+| Version | Codename | Person |
 |:--------|:---------|:-------|
-| 0.9.0 | Orville | Honoring Orville Wright, pilot of the first powered flight (1903) |
-
-Future versions will follow in historical order, honoring both Australian and international aviation legends.
+| 0.9.x | Orville | Orville Wright — pilot of the first controlled powered flight, Kitty Hawk, 17 December 1903 |
+| 1.0.0 | Wilbur | Wilbur Wright — aviation innovator and co-architect of powered flight |
 
 ---
 
-## AirTrack Development History
+## Philosophy
 
-AirTrack started life in **late 2022** as a field spotting experiment using a Raspberry Pi setup.
-It evolved through **2023** into a Pi-based detection system capturing aircraft registration numbers.
+Your data belongs to you.
 
-By **early 2024**, the idea expanded into building a complete database-backed, user-friendly aircraft tracking system for personal use — culminating today with the release of **AirTrack 0.9.0 "Orville"**.
+- No cloud accounts
+- No telemetry
+- No subscriptions
+- No dependency on our servers
+- Works completely offline
+- Runs on hardware you already own
 
-AirTrack has been a journey of:
-
-- Late nights
-- Fieldwork adventures
-- Data disasters (and recoveries)
-- Database rebuilds
-- Countless cups of coffee
-- Relentless passion for aviation
+If AirTrack Solutions disappeared tomorrow, every installation would keep running exactly as it does today.
 
 ---
 
 ## License
 
-- AirTrack is **Proprietary Software**.
-- Provided for evaluation and demonstration purposes only.
-- Redistribution, modification, or resale is not permitted without express permission.
+AirTrack Lite is **free for personal, non-commercial use**.
+Redistribution or resale without written permission is prohibited.
+All data you store with AirTrack belongs entirely to you.
+
+The full AirTrack system is available under a separate commercial licence.
 
 ---
 
-## Acknowledgments
+## Acknowledgements
 
-- ✈️ **Captain Trevor** — Founder, Visionary, Architect of AirTrack
-- 🛬 Bob (Sir Robert of AirTrack) — Project co-pilot, always ready to assist and share a laugh
-- ✈️ **Samowal** — The man without whose expertise this never would have been started and to whom I owe a debt of gratitude
-- 🐷 Miss Piggy — Spiritual mascot of AirTrack Solutions 😂
-- 🛩️ Every plane spotter who dreams big and looks up at the skies
+- **Trevor** — Founder, architect, captain of AirTrack Solutions
+- **Samowal** — Creator of the original PHP concept this grew from
+- **Bob** — AI co-pilot and general voice of reason
+- Every planespotter who looks up when something flies overhead
 
 ---
 
-# Final Boarding Call
+*Built by aviation enthusiasts, for aviation enthusiasts.*
 
-> "**AirTrack wasn't born — it was airlifted out, kicking, screaming, and waving a pilot's license!**" 🐷💄🛫😂
-
-Welcome aboard, Pilot.
-Clear skies and tailwinds.
-🛫🛬🛫
-
-## Author
-
-Developed by
-Samowal - Devvista - http://devvista.org (original php version)
-&
-Trevor - AirTrack Solutions - http://airtracksolutions.com (current python version)
+**[airtracksolutions.com.au](https://airtracksolutions.com.au) · [Discord](https://discord.gg/NsmUxZmuY)**

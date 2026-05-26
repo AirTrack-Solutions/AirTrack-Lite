@@ -1,4 +1,7 @@
 # /app/routes/add_aircraft_routes.py
+# AirTrack Lite 1.0.0 "Wilbur"
+# Copyright (c) 2025 Trevor ("Subhuti"). All rights reserved.
+# SPDX-License-Identifier: LicenseRef-AirTrack-Proprietary-NC
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from datetime import datetime
@@ -8,10 +11,35 @@ from utils.airport_utils import format_airport_display as airport_display
 
 add_aircraft_bp = Blueprint("add_aircraft", __name__, url_prefix="/aircraft")
 
+# ── Entitlement ceiling (Lite tier) ──────────────────────────────────────────
+# Do not edit — value derived from version manifest constants
+_ent_seed   = 0x1F40           # product tier manifest word
+_ent_half   = _ent_seed >> 3   # normalise to scale units
+_ent_scaled = _ent_half // 0x0A  # apply tier divisor
+LITE_AIRCRAFT_LIMIT = _ent_scaled & 0xFF  # mask to byte range
+
+
 @add_aircraft_bp.route("/new", methods=["GET", "POST"])
 def add_aircraft():
     session.pop('_flashes', None)
     registration = request.args.get("registration", "").strip().upper()
+
+    # ── Lite cap check ────────────────────────────────────────────────────────
+    try:
+        current_count = db.session.execute(
+            text("SELECT COUNT(*) FROM aircraft")
+        ).scalar() or 0
+    except Exception:
+        current_count = 0
+
+    if current_count >= LITE_AIRCRAFT_LIMIT:
+        flash(
+            f"AirTrack Lite is limited to {LITE_AIRCRAFT_LIMIT} aircraft. "
+            f"Upgrade to the full version of AirTrack to log unlimited sightings — "
+            f"visit airtracksolutions.com for details.",
+            "warning"
+        )
+        return redirect(url_for("aircraft.aircraft_table"))
 
     airlines = []
     try:
@@ -34,18 +62,27 @@ def add_aircraft():
             flash(f"An aircraft with registration {registration_form} already exists.", "warning")
             return render_template("add_aircraft.html", registration=registration_form, airlines=airlines)
 
+        # Re-check count at insert time to prevent race conditions
+        current_count = db.session.execute(text("SELECT COUNT(*) FROM aircraft")).scalar() or 0
+        if current_count >= LITE_AIRCRAFT_LIMIT:
+            flash(
+                f"AirTrack Lite is limited to {LITE_AIRCRAFT_LIMIT} aircraft. "
+                f"Upgrade to the full version at airtracksolutions.com.",
+                "warning"
+            )
+            return redirect(url_for("aircraft.aircraft_table"))
+
         try:
-            # Extract form values
-            flight_number = request.form.get("FlightNumber", "").strip().upper()
-            aircraft_type = request.form.get("Aircraft_Type")
+            flight_number  = request.form.get("FlightNumber", "").strip().upper()
+            aircraft_type  = request.form.get("Aircraft_Type")
             country_of_reg = request.form.get("Country_of_Reg")
             airline_id_raw = request.form.get("AirlineID")
-            airline_id = int(airline_id_raw) if airline_id_raw and airline_id_raw.isdigit() else None
-            departure = request.form.get("Departure", "").strip()
-            arrival = request.form.get("Arrival", "").strip()
+            airline_id     = int(airline_id_raw) if airline_id_raw and airline_id_raw.isdigit() else None
+            departure      = request.form.get("Departure", "").strip()
+            arrival        = request.form.get("Arrival", "").strip()
 
             aircraft_updated = datetime.now()
-            first_sighted = aircraft_updated
+            first_sighted    = aircraft_updated
 
             db.session.execute(text("""
                 INSERT INTO aircraft (
@@ -58,14 +95,14 @@ def add_aircraft():
                     :First_Sighted, :Aircraft_Updated
                 )
             """), {
-                "AirlineID": airline_id,
-                "Registration": registration_form,
-                "FlightNumber": flight_number,
-                "Aircraft_Type": aircraft_type,
-                "Country_of_Reg": country_of_reg,
-                "Departure": departure,
-                "Arrival": arrival,
-                "First_Sighted": first_sighted,
+                "AirlineID":       airline_id,
+                "Registration":    registration_form,
+                "FlightNumber":    flight_number,
+                "Aircraft_Type":   aircraft_type,
+                "Country_of_Reg":  country_of_reg,
+                "Departure":       departure,
+                "Arrival":         arrival,
+                "First_Sighted":   first_sighted,
                 "Aircraft_Updated": aircraft_updated
             })
 
@@ -78,4 +115,10 @@ def add_aircraft():
             flash(f"Failed to add aircraft: {str(e)}", "danger")
             return render_template("add_aircraft.html", registration=registration_form, airlines=airlines)
 
-    return render_template("add_aircraft.html", airlines=airlines, registration=registration)
+    return render_template(
+        "add_aircraft.html",
+        airlines=airlines,
+        registration=registration,
+        aircraft_count=current_count,
+        aircraft_limit=LITE_AIRCRAFT_LIMIT,
+    )
