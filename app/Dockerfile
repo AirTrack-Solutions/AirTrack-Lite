@@ -17,7 +17,8 @@ RUN apt-get update && \
         python3-dev \
         python3-venv \
         curl \
-        tzdata && \
+        tzdata \
+        nano && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy AirTrack app files
