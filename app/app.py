@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 import time
 import json
@@ -358,8 +359,13 @@ def upload_aircraft_image():
             flash("Registration and image are required.", "danger")
             return redirect(url_for("upload_aircraft_image"))
 
-        filename = f"{registration}_{datetime.now().strftime('%Y%m%d%H%M%S')}.jpg"
-        image.save(os.path.join("static/aircraft_images", filename))
+        safe_reg = re.sub(r'[^A-Z0-9\-]', '', registration.upper())[:20]
+        filename = f"{safe_reg}_{datetime.now().strftime('%Y%m%d%H%M%S')}.jpg"
+        save_dir = os.path.realpath(os.path.join("static/aircraft_images"))
+        save_path = os.path.realpath(os.path.join(save_dir, filename))
+        if not save_path.startswith(save_dir + os.sep):
+            return "Invalid filename", 400
+        image.save(save_path)
 
         try:
             with db.engine.begin() as conn:
@@ -1083,4 +1089,4 @@ if __name__ == "__main__":
         print("----------------------\n")
 
     # ✅ Start Flask app
-    app.run(host="0.0.0.0", port=5000, debug=True, use_reloader=False, threaded=False)
+    app.run(host="0.0.0.0", port=5000, debug=os.getenv("FLASK_DEBUG", "0") == "1", use_reloader=False, threaded=False)
