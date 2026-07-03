@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify, render_template
 from sqlalchemy import text
 from extensions import db
+import html
 from functools import lru_cache
 import logging
 
@@ -115,7 +116,7 @@ def airport_info(icao):
         ).fetchone()
         
         if not airport:
-            return f"Airport {icao} not found in database.", 404
+            return f"Airport {html.escape(icao)} not found in database.", 404
 
         aircraft_count = db.session.execute(
             text("SELECT COUNT(*) FROM aircraft WHERE Departure = :icao OR Arrival = :icao"),
@@ -127,9 +128,9 @@ def airport_info(icao):
             aircraft_count=aircraft_count)
 
     except Exception as e:
-        import traceback
-        traceback.print_exc()
-        return f"⚠️ Exception: {str(e)}", 500
+        import logging
+        logging.exception("Airport route error")
+        return "Internal server error", 500
 
 @lru_cache(maxsize=100)
 def format_airport_display(icao_code):
@@ -180,3 +181,4 @@ def setup_logging():
     return airport_logger
 
 logger = setup_logging()
+
